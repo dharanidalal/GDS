@@ -1,0 +1,9 @@
+[webservers]
+host1.example.com
+
+[dbservers]
+host2.example.com
+
+[datacenters:children]
+webservers
+dbservers

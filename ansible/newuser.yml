@@ -1,0 +1,9 @@
+---
+- name: Create a new user in the servers group
+  hosts: servers
+  tasks:
+    - name: Create the user John
+      user: 
+        user: john
+        state: present
+        uid: 2001

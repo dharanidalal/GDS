@@ -1,0 +1,11 @@
+---
+- name: Create a new user with password collected from external
+  hosts: datacenters
+  var_files:
+    - mypasswd
+  tasks:
+    - name: create new user
+      user:
+        name: alex
+        password: "{{ password }}"
+        state: present

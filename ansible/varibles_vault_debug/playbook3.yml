@@ -1,0 +1,13 @@
+---
+- name: Use of register keyword
+  hosts: webservers
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+      register: result
+
+     - name: Use debug module to view the output
+       debug: 
+         var: result

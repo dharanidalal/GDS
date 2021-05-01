@@ -1,0 +1,12 @@
+---
+### Defining Variables in Playbooks
+- name: Create a user account
+  hosts: webservers
+  vars: 
+    username: dharani
+    homepath: /home/dharani
+  tasks:
+    - name: Create the user {{ username }}
+      user:
+        name: "{{ username }}"
+        home: "{{ homepath }}"

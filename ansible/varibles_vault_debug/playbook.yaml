@@ -1,0 +1,29 @@
+---
+- name: This play will install web service to all hosts of webservers group
+  hosts: webservers
+  # vars:
+  #  web_pkg: httpd
+  #  web_service: httpd
+  #  firewall_service: http
+  vars:
+    firewall_service: https
+  tasks:
+    - name: Install the {{ web_pkg }} package
+      yum:
+        name: "{{ web_pkg }}"
+        state: present
+    - name: Create the default web page
+      copy: 
+        content: "Hello World"
+        dest: /var/www/html/index.html
+    - name: start and enable the {{ web_service }}
+      service:
+        name: "{{ web_service }}"
+        state: started
+        enabled: true
+    - name: Configure firewall to allow {{ firewall_service }}
+      firewalld:
+        service: "{{ firewall_service}}"
+        permanent: true
+        state: enabled
+        immediate: true

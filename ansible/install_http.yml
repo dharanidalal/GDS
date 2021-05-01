@@ -1,0 +1,33 @@
+---
+  - name: Install http package on host1.example.com and run apache web server
+    hosts: host1.example.com
+    tasks:
+      - name: Install the httpd package
+        yum: 
+          name: httpd
+          state: latest
+
+      - name: Create and copy the default document
+        copy: 
+          content: "Hello World"
+          dest: /var/www/html/index.html
+
+      - name: Start web server
+        service:
+          name: httpd
+          state: started
+          enabled: true
+      - name: enable firewall
+        firewalld:
+          service: http
+          permanent: yes
+          state: enabled
+  - name: Test the access to the web site
+    hosts: localhost
+    become: no
+    tasks:
+      - name: Connect to the host1.example.com web site
+        uri: 
+          url: http://host1.example.com
+          status_code: 200
+          return_content: true
