@@ -1,0 +1,47 @@
+---
+#Create a playbook called playbook.yml which will configure webserver on host1.example.com with the help of the following variables which need to be written as play scope
+- name: Create a playbook called playbook.yml which will configure webserver on host1.example.com with the help of the following variables which need to be written as play scope
+  hosts: webservers
+  vars: 
+    web_pkg: httpd
+    web_service: httpd
+    python_pkg: python3-PyMySQL    
+    rule: http
+  tasks:
+    - name: Install {{ web_pkg }} and {{ python_pkg }} packages
+      yum: 
+        name: 
+          - "{{ web_pkg }}"
+          - "{{ python_pkg }}"
+        state: present
+
+    - name: Copy the install.html file from files directory with proper permission
+      copy:
+        src: files/install.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Start and enable {{web_service }} service
+      service:
+        name: "{{web_service }}"
+        state: started
+
+    - name: Configure firewall rule for "{{ rule }}" service
+      firewalld:
+        service: "{{ rule }}"
+        permanent: yes
+        state: enabled
+- name: Create a second play in the same playbook which will check access to the web server and display the result with help with 'register' directive.
+  hosts: webservers
+  tasks:
+    - name: check access to the web server and display the result with help with 'register' directive.
+      uri:
+        url: http://host1.example.com:80
+        return_content: True
+      register: result
+        
+    - name: debug the output
+      debug:
+        var: result

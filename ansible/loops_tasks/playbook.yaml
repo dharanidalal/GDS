@@ -1,0 +1,14 @@
+---
+- name: Looping with Register
+  hosts: host1.example.com
+  gather_facts: none #time saving done here
+  tasks: 
+    - name: Looping with echo 
+      shell: 
+        cmd: "echo this is the item: {{ item }}"
+      loop: 
+        - item1
+        - item2
+      register: results #capture the shell output in the results variables
+    - debug: 
+        var: results

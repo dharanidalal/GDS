@@ -1,0 +1,9 @@
+---
+- name: Stop multiple services named httpd and chronyd on host1 as mentioned in the inventory file.
+  hosts: dev
+  tasks:
+    - name: Stop httpd and chronyd services
+      service: 
+        name: "{{ item }}"
+        state: stopped
+      loop: ['httpd', 'chronyd']

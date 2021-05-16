@@ -1,0 +1,23 @@
+---
+- name: Ensure Maria DB server is running
+  hosts: dev
+  vars: 
+    mariadb_packages:
+      - mariadb-server
+      - python3-PyMySQL
+    supported_distros:
+      - Redhat 
+      - Fedora
+    tasks: 
+      - name: Mariadb Packages are getting installed
+        yum: 
+          name: "{{ item }}"
+          state: present
+
+        loop: "{{ mariadb_packages }}"
+        when: ansible_distribution in supported_distros
+      - name: Enable and start mariadb service
+        service: 
+          name: mariadb
+          state: started
+          enabled: true

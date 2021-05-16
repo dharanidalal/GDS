@@ -1,0 +1,17 @@
+--- 
+- name: Testing of handlers
+  hosts: prod
+  tasks: 
+    - name: Install Apache HTTPD package
+      yum: 
+        name: httpd
+        state: latest
+      notify: restart httpd
+
+  handlers: 
+    - name: restart httpd
+      service: 
+        name: httpd
+        state: restarted
+        enabled: true
+      

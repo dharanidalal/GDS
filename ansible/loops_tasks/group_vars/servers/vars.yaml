@@ -1,0 +1,10 @@
+#user_details:
+#  - { name: user1, group: wheel}
+#  - { name: user2, group: - wheel - mysql}
+user_details:
+  - name: user1
+    group: wheel
+
+  - name: user2
+    group: wheel
+    group: mysql

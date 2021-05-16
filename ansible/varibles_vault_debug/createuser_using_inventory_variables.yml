@@ -1,0 +1,8 @@
+---
+#Creating user using inventory variables
+- name: Create user using inventory variables
+  hosts: datacenters
+  tasks:
+    - name: Create user {{ user }} 
+      user: 
+        name: "{{ user }}"

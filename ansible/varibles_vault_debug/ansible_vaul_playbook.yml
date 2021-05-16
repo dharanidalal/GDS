@@ -1,0 +1,11 @@
+---
+#Ansible vault usage
+- name: Using ansible vault
+  hosts: webservers
+  vars_files:
+    - host_vars/host1.example.com/secret.yml
+  tasks:
+    - name: Create user {{ user }}
+      user:
+        name: "{{ user }}"
+        password: "{{ password }}"

@@ -1,0 +1,13 @@
+---
+- name: Create multiple directories named dir1, dir2, dir3 inside /mnt directory with permission as 775 owner/group as root on the Target systems as mentioned in the inventory file.
+  hosts: dev
+  tasks: 
+    - name: Task to create multiple directories using loop
+      file: 
+        path: "/mnt/{{ item }}"
+        owner: root
+        group: root
+        mode: '755'
+        state: directory
+      loop: ['dir1', 'dir2', 'dir3']
+

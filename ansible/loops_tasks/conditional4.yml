@@ -1,0 +1,14 @@
+---
+- name: Create multiple users on servers group with the following details
+  vars_files:
+    - group_vars/servers/vars.yaml
+    - group_vars/servers/secret.yml
+  hosts: servers
+  tasks: 
+    - name: Create multiple users
+      user:
+        name: "{{ item.name }}"
+        groups: "{{ item.group }}"
+        password: "{{ password }}"
+      with_items: "{{ user_details }}"
+                

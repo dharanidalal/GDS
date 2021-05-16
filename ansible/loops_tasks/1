@@ -1,0 +1,31 @@
+---
+- name: Deploy httpd package on host2. Copy the httpd.conf file from control node to managed host. Create the default document with the content "Hello Wolrd". Notify that if any change occurs in configuration file it will restart the httpd service. Configure firewall for http service and port 8080/tcp.
+  hosts: prod
+  tasks:
+    - name: install httpd
+      yum: 
+        name: httpd
+        state: present
+    - name: copy httpd.conf from control node to managed node
+      copy:
+        src: /etc/httpd/conf/httpd.conf
+        dest: /etc/httpd/conf
+      register: result
+    - name: copy content from control node to managed node
+      copy:
+        content: "Hello World"
+        dest: /var/www/html/index.html
+        checksum
+      register: result1
+      #service:
+      #state: restart
+      #when: 
+    - name: reload httpd
+      service:
+        name: httpd
+        state: restarted
+      register: result3
+      when: result is succeeded
+    - name: print result
+      debug:
+        msg: "result {{ result }} and result1 {{ result1 }} and result3 {{ result3 }}"

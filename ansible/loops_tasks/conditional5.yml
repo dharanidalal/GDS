@@ -1,0 +1,20 @@
+---
+- name: Install system updates on host1 if the operating system is CentOS, and on host2 if the operating system is Ubuntu.
+  hosts: servers
+  tasks:
+    - name: System updates on host1 if the OS is CentOS
+      yum:
+        name: "*" 
+        state: latest
+      when:
+        ansible_distribution == "CentOS" and inventory_hostname == "host1.example.com"
+      register: results
+    - name: System updates on host2 if the OS is Ubuntu
+      yum:
+        name: "*"
+        state: latest
+      when:
+        ansible_distribution == "Ubuntu" and inventory_hostname == "host2.example.com"
+    - name: print results
+      debug:
+        var: results

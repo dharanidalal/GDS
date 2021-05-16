@@ -1,0 +1,11 @@
+---
+#Create user using variable file
+- name: Create user account using variable file
+  hosts: webservers
+  vars_files:
+    - user_info.yml
+  tasks:
+    - name: Create a user {{ user }}
+      user: 
+        name: "{{ user }}"
+        home: "{{ home }}" 

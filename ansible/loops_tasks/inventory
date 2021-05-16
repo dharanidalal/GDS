@@ -1,0 +1,9 @@
+[dev]
+host1.example.com
+
+[prod]
+host2.example.com
+
+[servers]
+host1.example.com
+host2.example.com
